@@ -3,9 +3,9 @@ WITH order_cus AS(
 	SELECT customers.customer_id,customer_unique_id,order_id,order_status FROM orders
 	INNER JOIN customers
 	ON orders.customer_id = customers.customer_id
-	WHERE (order_status != 'canceled' AND order_status != 'unavailable') 
-	OR order_status IS NULL
---	WHERE order_status = 'delivered'
+--	WHERE (order_status != 'canceled' AND order_status != 'unavailable') 
+--	OR order_status IS NULL
+	WHERE order_status = 'delivered'
 ),
 unique_count AS(
 SELECT customer_unique_id,COUNT(order_id) AS total_count
@@ -25,6 +25,4 @@ CASE
 END 
 ) AS repeat_count, COUNT(*) AS total FROM unique_count
 
---SELECT * FROM (VALUES ('delivered'), ('canceled'), (NULL)) AS t(status)
---WHERE status != 'canceled' OR status IS NULL;
-SELECT MIN(order_purchase_timestamp), MAX(order_purchase_timestamp) FROM orders;       
+--SELECT MIN(order_purchase_timestamp), MAX(order_purchase_timestamp) FROM orders;       
